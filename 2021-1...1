@@ -1,0 +1,31 @@
+#include <iostream>
+using namespace std;
+ 
+// Función que encuentra la suma máxima de un subarreglo contiguo en un arreglo entero
+int kadane(int arr[], int n)
+{
+    // almacena el subarreglo de suma máxima encontrado hasta ahora
+    int max_so_far = 0;
+    // almacena la suma máxima de subarreglos que terminan en la posición actual
+    int max_ending_here = 0;
+    for (int i = 0; i < n; i++)
+    {
+        // actualiza la suma máxima del subarreglo "final" en el índice i (agregando el elemento actual a
+        // la suma máxima que termina en el índice anterior i-1)
+        max_ending_here = max_ending_here + arr[i]; 
+        // si la suma máxima es negativa, establecerla en 0 (que representa un subarreglo vacío)
+        max_ending_here = max(max_ending_here, 0); 
+        // actualizar el resultado si la suma del subarreglo actual es mayor
+        max_so_far = max(max_so_far, max_ending_here);
+    }
+    return max_so_far;
+}
+ 
+int main()
+{
+    int arr[] = { -2, 1, -3, 4, -1, 2, 1, -5, 4 };
+    int n = sizeof(arr)/sizeof(arr[0]);
+    cout << "La suma máxima de un subarreglo contiguo es " <<
+            kadane(arr, n);
+    return 0;
+}
